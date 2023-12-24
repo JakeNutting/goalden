@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Navbar } from "./_components/navbar";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <>
-      <Navbar></Navbar>
       <div className="bg-gradient-to-r from-green-500/20 to-blue-700/20 py-20">
         <div className="mx-auto max-w-screen-xl px-2 xl:px-0">
           <h1 className="text-dark text-3xl font-semibold md:text-center">
@@ -15,7 +14,7 @@ export default function Home() {
           </p>
           <div className="flex md:justify-center">
             <Button variant={"default"} className="mt-3 flex justify-center">
-              Get Started
+              <Link href="/dashboard">Get Started</Link>
             </Button>
           </div>
         </div>
