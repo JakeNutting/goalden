@@ -27,7 +27,7 @@ export default async function Dashboard() {
               <NewItem></NewItem>
             </div>
           )}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
             {groups.map((group) => (
               <div
                 className="rounded-md border border-gray-200 bg-white mt-3 p-4"
@@ -35,9 +35,9 @@ export default async function Dashboard() {
               >
                 <div className="flex items-center justify-between">
                   <h1 className="font-semibold text-lg">{group.groupName}</h1>
-
                   <ManageGoal goalId={group.id}></ManageGoal>
                 </div>
+                <p className="text-gray-400 text-sm mt-2">{group.groupType}</p>
               </div>
             ))}
           </div>

@@ -28,7 +28,7 @@ export default function NewItem() {
           <form action={create}>
               <p className="mb-2 mt-3">Group Name:</p>
               <Input type="text" name="groupName"></Input>
-              <p className="mb-2 mt-6">Group Type:</p>
+              <p className="mb-2 mt-6">Group Description:</p>
               <Input type="text" name="groupType"></Input>
               <Button className="mt-5">Create</Button>
             </form>
