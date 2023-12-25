@@ -11,7 +11,7 @@ export async function create(formData: FormData) {
     const groupName = formData.get('groupName');
     const groupType = formData.get('groupType');
 
-    const group = await prisma.group.create({
+    const group = await prisma.group?.create({
         data: {
             groupName: groupName as string,
             groupType: groupType as string,
