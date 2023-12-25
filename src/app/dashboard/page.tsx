@@ -1,8 +1,8 @@
 "use server";
-import { Button } from "@/components/ui/button";
+
 import { createPrismaClient } from "../../../prisma/prisma";
 import NewItem from "./_components/new-item";
-import { MoreVertical } from "lucide-react";
+import { LayoutDashboard, MoreVertical } from "lucide-react";
 import ManageGoal from "./_components/manage-goal";
 
 export default async function Dashboard() {
@@ -14,7 +14,7 @@ export default async function Dashboard() {
     <>
       <div className="bg-blue-50">
         <div className="mx-auto max-w-screen-xl px-2 xl:px-0 py-10">
-          <h1 className="font-semibold text-sm">User's Dashboard</h1>
+          <h1 className="text-gray-500 text-sm flex items-center gap-2"><LayoutDashboard size={22} className="text-blue-700"></LayoutDashboard>Jake's Dashboard</h1>
           {groups?.length === 0 && (
             <div className="flex items-center gap-5 mt-3">
               <h6>You don't have any groups.. </h6>
@@ -41,6 +41,8 @@ export default async function Dashboard() {
               </div>
             ))}
           </div>
+
+          
         </div>
       </div>
     </>
