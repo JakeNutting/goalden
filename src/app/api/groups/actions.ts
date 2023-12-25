@@ -1,10 +1,10 @@
 'use server'
 
+import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import { createPrismaClient } from "../../../../prisma/prisma"
 
 export async function create(formData: FormData) {
-    const prisma = createPrismaClient();
+    const prisma = new PrismaClient();
 
     // Probably not how I'm supposed to do it, but gonna do it anyway for now.
 
@@ -18,6 +18,8 @@ export async function create(formData: FormData) {
             createdById: 1,
         }
     });
+
+    
 
     revalidatePath('/dashboard');
 }

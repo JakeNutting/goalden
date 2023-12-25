@@ -1,12 +1,12 @@
 "use server";
 
-import { createPrismaClient } from "../../../prisma/prisma";
 import NewItem from "./_components/new-item";
 import { LayoutDashboard, MoreVertical } from "lucide-react";
 import ManageGoal from "./_components/manage-goal";
+import { PrismaClient } from "@prisma/client";
 
 export default async function Dashboard() {
-  const prisma = createPrismaClient();
+  const prisma = new PrismaClient();
 
   const groups = await prisma.group.findMany();
 
@@ -42,7 +42,7 @@ export default async function Dashboard() {
             ))}
           </div>
 
-          
+
         </div>
       </div>
     </>
