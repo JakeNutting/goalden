@@ -4,11 +4,12 @@ import NewItem from "./_components/new-item";
 import { LayoutDashboard } from "lucide-react";
 import ManageGoal from "./_components/manage-goal";
 import { PrismaClient } from "@prisma/client";
+import { createPrismaClient } from "../../../prisma/prisma";
 
 export default async function Dashboard() {
-  const prisma = new PrismaClient();
+  const prisma = createPrismaClient();
 
-  const groups = await prisma.group?.findMany();
+  const groups = await prisma.group.findMany();
 
   return (
     <>
