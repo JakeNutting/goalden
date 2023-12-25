@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from "next/cache";
-import { createPrismaClient } from "../../../../prisma/prisma";
+import createPrismaClient from "../../../../prisma/prisma";
 
 export async function create(formData: FormData) {
     const prisma = createPrismaClient();
