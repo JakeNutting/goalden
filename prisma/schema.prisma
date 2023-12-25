@@ -12,7 +12,29 @@ datasource db {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
+  id            Int         @id @default(autoincrement())
+  email         String      @unique
+  name          String?
+  groups        Group[]
+  groupItems    GroupItem[]
+}
+
+model Group {
+  id            Int         @id @default(autoincrement())
+  groupName     String
+  groupType     String
+  createdAt     DateTime    @default(now())
+  createdBy     User        @relation(fields: [createdById], references: [id])
+  createdById   Int         
+  groupItems    GroupItem[]
+}
+
+model GroupItem {
+  id            Int         @id @default(autoincrement())
+  itemName      String
+  createdAt     DateTime    @default(now())
+  createdBy     User        @relation(fields: [createdById], references: [id])
+  createdById   Int         
+  group         Group       @relation(fields: [groupId], references: [id])
+  groupId       Int
 }
