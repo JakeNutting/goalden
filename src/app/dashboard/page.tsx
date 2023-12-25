@@ -27,10 +27,10 @@ export default async function Dashboard() {
               <NewItem></NewItem>
             </div>
           )}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-8 mt-3">
             {groups.map((group) => (
               <div
-                className="rounded-md border border-gray-200 bg-white mt-3 p-4"
+                className="rounded-md border border-gray-200 bg-white p-4"
                 key={group.id}
               >
                 <div className="flex items-center justify-between">
