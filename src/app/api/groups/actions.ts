@@ -21,3 +21,18 @@ export async function create(formData: FormData) {
     
     revalidatePath('/dashboard');
 }
+
+export async function deleteGroup(groupId: number) {
+    const prisma = createPrismaClient();
+
+    const group = await prisma.group.update({
+        where: {
+            id: groupId
+        },
+        data: {
+            isActive: false
+        }
+    })
+
+    revalidatePath('/dashboard');
+}

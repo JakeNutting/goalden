@@ -8,7 +8,11 @@ import createPrismaClient from "../../../prisma/prisma";
 export default async function Dashboard() {
   const prisma = createPrismaClient();
 
-  const groups = await prisma.group.findMany();
+  const groups = await prisma.group.findMany({
+    where: {
+      isActive: true
+    }
+  });
 
   return (
     <>
@@ -35,7 +39,7 @@ export default async function Dashboard() {
               >
                 <div className="flex items-center justify-between">
                   <h1 className="font-semibold text-lg">{group.groupName}</h1>
-                  <ManageGoal goalId={group.id}></ManageGoal>
+                  <ManageGoal group={group}></ManageGoal>
                 </div>
                 <p className="text-gray-400 text-sm mt-2">{group.groupType}</p>
               </div>
