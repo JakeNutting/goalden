@@ -1,5 +1,5 @@
 "use client";
-import { create } from "@/app/api/groups/actions";
+import { createOrUpdate } from "@/app/api/groups/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,11 +9,13 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useState } from "react";
 
 export default function NewItem() {
+  const [open, setOpen] = useState(false);
   return (
     <>
-      <Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild className="cursor-pointer hover:text-blue-700" >
           <Button size={"sm"} variant={"outline"} className="">
             Create Group
@@ -25,12 +27,12 @@ export default function NewItem() {
               <span className="font-semibold">Add Group</span>
             </div>
           </SheetHeader>
-          <form action={create}>
+          <form action={createOrUpdate}>
               <p className="mb-2 mt-3">Group Name:</p>
               <Input type="text" name="groupName"></Input>
               <p className="mb-2 mt-6">Group Description:</p>
               <Input type="text" name="groupType"></Input>
-              <Button className="mt-5">Create</Button>
+              <Button className="mt-5" onClick={() => setOpen(false)}>Create</Button>
             </form>
         </SheetContent>
       </Sheet>
