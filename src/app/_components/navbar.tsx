@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -5,6 +6,8 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { OrganizationList, OrganizationSwitcher, SignInButton, SignOutButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { User, currentUser } from "@clerk/nextjs/server";
 import {
   BookOpenText,
   Home,
@@ -15,7 +18,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export function Navbar() {
+export async function Navbar() {
+  const currUser = await currentUser();
   return (
     <nav className="dark:bg-gray-900 shadow-sm">
       <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between py-4 px-4 xl:px-0">
@@ -35,33 +39,44 @@ export function Navbar() {
                 Home
               </Link>
             </li>
-            <li>
+            {/* <li>
               <a
                 href="#"
                 className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
               >
                 About
               </a>
-            </li>
-            <li>
-              <Link
-                href="/dashboard"
-                className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
-              >
-                Dashboard
-              </Link>
+            </li> */}
+            {/* <li>
+              <OrganizationSwitcher />
+            </li> */}
+            <SignedIn>
+              <li>
+                <Link
+                  href="/dashboard"
+                  className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                >
+                  Dashboard
+                </Link>
+              </li>
+            </SignedIn>
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <li className="flex items-center">
+              <UserButton></UserButton>
             </li>
           </ul>
         </div>
         <div className="test text-dark md:hidden">
-          <MobileNavbar></MobileNavbar>
+          <MobileNavbar user={currUser}></MobileNavbar>
         </div>
       </div>
     </nav>
   );
 }
 
-export function MobileNavbar() {
+export function MobileNavbar({ user }: { user: User | null }) {
   return (
     <>
       <Sheet>
@@ -70,9 +85,19 @@ export function MobileNavbar() {
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>
-            <div className="flex items-center my-4 gap-3">
-              <span className="font-semibold">Hello, User</span>
-            </div>
+          <div className="flex items-center my-4 mb-3 gap-3">
+            <SignedIn>
+              <UserButton afterSignOutUrl="/"></UserButton>
+              <span className="font-semibold">Hello, {user?.firstName} {user?.lastName}</span>
+            </SignedIn>
+            <SignedOut>
+              <div className="flex flex-col w-full gap-3">
+                <h4 className="text-left">Sign in to get started</h4>
+                <Button variant={"outline"} size={"sm"}><SignInButton></SignInButton></Button>
+              </div>
+            </SignedOut>
+          </div>
+          <Button variant={"outline"} size="sm"><SignOutButton></SignOutButton></Button>
             <hr></hr>
           </SheetHeader>
           <SheetDescription>
@@ -99,17 +124,19 @@ export function MobileNavbar() {
                     </span>
                   </a>
                 </li>
-                <li>
-                  <Link
-                    href="/dashboard"
-                    className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
-                  >
-                    <span className="flex items-center gap-4 font-semibold text-lg">
-                      {" "}
-                      <LayoutDashboard></LayoutDashboard> Dashboard
-                    </span>
-                  </Link>
-                </li>
+                <SignedIn>
+                  <li>
+                    <Link
+                      href="/dashboard"
+                      className="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                    >
+                      <span className="flex items-center gap-4 font-semibold text-lg">
+                        {" "}
+                        <LayoutDashboard></LayoutDashboard> Dashboard
+                      </span>
+                    </Link>
+                  </li>
+                </SignedIn>
               </ul>
             </div>
           </SheetDescription>
