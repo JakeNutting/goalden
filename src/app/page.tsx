@@ -27,6 +27,7 @@ export default function Home() {
                 <Link href="/dashboard">Get Started</Link>
               </SignedIn>
             </Button>
+            
           </div>
         </div>
       </div>
