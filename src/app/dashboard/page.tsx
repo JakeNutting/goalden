@@ -1,9 +1,11 @@
 "use server";
 
-import NewItem from "./_components/new-item";
-import { LayoutDashboard } from "lucide-react";
-import ManageGoal from "./_components/manage-goal";
+import NewItem from "./budget/_components/new-account";
 import createPrismaClient from "../../../prisma/prisma";
+import { OrganizationSwitcher } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import { CircleDollarSign } from "lucide-react";
+import Link from "next/link";
 
 export default async function Dashboard() {
   const prisma = createPrismaClient();
@@ -18,21 +20,36 @@ export default async function Dashboard() {
     <>
       <div className="bg-blue-50">
         <div className="mx-auto max-w-screen-xl px-2 xl:px-0 py-10">
-          <h1 className="text-gray-500 text-sm flex items-center gap-2"><LayoutDashboard size={22} className="text-blue-700"></LayoutDashboard>Jake's Dashboard</h1>
           {groups?.length === 0 && (
-            <div className="flex items-center gap-5 mt-3">
+            <div className="flex items-center gap-5">
               <h6>You don't have any groups.. </h6>
               <NewItem></NewItem>
             </div>
           )}
-          {groups?.length > 0 && (
-            <div className="flex justify-between items-center mt-5">
-              <h4 className="text-xl font-semibold">My Groups</h4>
-              <NewItem></NewItem>
+          <div className="flex justify-between items-center">
+            <h4 className="text-xl font-semibold">Dashboard</h4>
+            <OrganizationSwitcher />
+          </div>
+          <h4 className="text-md mt-1">Your space to track and manage your organization.</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-8 mt-5">
+            <div className="rounded-md border border-gray-200 bg-white p-4">
+              <div className="flex items-center justify-between">
+                <h1 className="font-semibold text-2xl flex gap-3 items-center"><CircleDollarSign className="text-blue-700"></CircleDollarSign>Budget</h1>
+              </div>
+              <p className="text-gray-400 text-sm mt-1">In need of saving some money for that new car? You're in luck!</p>
+              <div className="flex justify-center">
+                <Button
+                  variant={"default"}
+                  className="mt-4 bg-blue-700 hover:bg-blue-800 transition-colors w-full md:w-1/2">
+                  <Link
+                    href={"/dashboard/budget"} >
+                      Start Budgeting
+                  </Link>
+                </Button>
+
+              </div>
             </div>
-          )}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-8 mt-3">
-            {groups.map((group) => (
+            {/* {groups.map((group) => (
               <div
                 className="rounded-md border border-gray-200 bg-white p-4"
                 key={group.id}
@@ -43,7 +60,7 @@ export default async function Dashboard() {
                 </div>
                 <p className="text-gray-400 text-sm mt-2">{group.groupType}</p>
               </div>
-            ))}
+            ))} */}
           </div>
 
 

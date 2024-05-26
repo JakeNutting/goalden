@@ -5,20 +5,19 @@ import { Input } from "@/components/ui/input";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useState } from "react";
 
-export default function NewItem() {
+export default function NewAccount() {
   const [open, setOpen] = useState(false);
   return (
     <>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild className="cursor-pointer hover:text-blue-700" >
           <Button size={"sm"} variant={"outline"} className="">
-            Create Group
+            Create Account
           </Button>
         </SheetTrigger>
         <SheetContent>

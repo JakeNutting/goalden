@@ -6,7 +6,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { OrganizationList, OrganizationSwitcher, SignInButton, SignOutButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { User, currentUser } from "@clerk/nextjs/server";
 import {
   BookOpenText,
@@ -23,12 +23,15 @@ export async function Navbar() {
   return (
     <nav className="dark:bg-gray-900 shadow-sm">
       <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between py-4 px-4 xl:px-0">
-        <Link
-          href="/"
-          className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"
-        >
-          Goalden
-        </Link>
+        <div className="flex gap-2 items-center">
+          <img src="/app-icon.png"></img>
+          <Link
+            href="/"
+            className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"
+          >
+            Goalden
+          </Link>
+        </div>
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
           <ul className="mt-4 flex items-center font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:space-x-8 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900">
             <li>

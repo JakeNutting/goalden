@@ -30,6 +30,43 @@ model Group {
   groupItems    GroupItem[]
 }
 
+model Accounts {
+  id            Int         @id @default(autoincrement())
+  accountName          String
+  accountType          AccountTypes   @relation(fields: [accountTypeId], references: [id])
+  accountTypeId        Int
+  startingAllowance    Decimal
+  organizationId       Int
+  createdAt            DateTime    @default(now())
+  isActive             Boolean     @default(true)
+  accountActivities    AccountActivities[]
+}
+
+model AccountActivities {
+  id             Int         @id @default(autoincrement())
+  ammount                       Decimal
+  account                       Accounts   @relation(fields: [accountId], references: [id])
+  accountId                     Int
+  activityType                  ActivityTypes   @relation(fields: [activityTypeId], references: [id])
+  activityTypeId                Int
+  createdAt                     DateTime    @default(now())
+  isActive                      Boolean     @default(true)
+}
+
+model ActivityTypes {
+  id            Int         @id @default(autoincrement())
+  activityName              String
+  isActive                  Boolean     @default(true)
+  accountActivities         AccountActivities[]
+}
+
+model AccountTypes {
+  id           Int          @id @default(autoincrement())
+  type                    String   
+  isActive                Boolean      @default(true)      
+  accounts                Accounts[]
+}
+
 model GroupItem {
   id            Int         @id @default(autoincrement())
   itemName      String
