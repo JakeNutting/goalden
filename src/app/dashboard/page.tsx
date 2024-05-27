@@ -1,31 +1,16 @@
 "use server";
 
 import NewItem from "./budget/_components/new-account";
-import createPrismaClient from "../../../prisma/prisma";
 import { OrganizationSwitcher } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { CircleDollarSign } from "lucide-react";
 import Link from "next/link";
 
 export default async function Dashboard() {
-  const prisma = createPrismaClient();
-
-  const groups = await prisma.group.findMany({
-    where: {
-      isActive: true
-    }
-  });
-
   return (
     <>
       <div className="bg-blue-50">
         <div className="mx-auto max-w-screen-xl px-2 xl:px-0 py-10">
-          {groups?.length === 0 && (
-            <div className="flex items-center gap-5">
-              <h6>You don't have any groups.. </h6>
-              <NewItem></NewItem>
-            </div>
-          )}
           <div className="flex justify-between items-center">
             <h4 className="text-xl font-semibold">Dashboard</h4>
             <OrganizationSwitcher />
