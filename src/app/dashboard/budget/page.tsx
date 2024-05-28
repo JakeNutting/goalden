@@ -2,8 +2,6 @@
 import { OrganizationSwitcher, useOrganization } from "@clerk/nextjs";
 import NewAccount from "./_components/new-account";
 import { CircleDollarSign } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Account } from "./models/account";
 import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 
@@ -36,7 +34,7 @@ const Budget = () => {
             <NewAccount></NewAccount>
           </div>
         )}
-        <div className="flex justify-between mb-5">
+        <div className="flex justify-between items-center mb-5">
           <h6 className="font-semibold text-xl">My Accounts</h6>
           <NewAccount></NewAccount>
         </div>
