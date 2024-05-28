@@ -12,9 +12,7 @@ import {
   BookOpenText,
   Home,
   LayoutDashboard,
-  Mail,
   Menu,
-  Shirt,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -24,7 +22,6 @@ export async function Navbar() {
     <nav className="dark:bg-gray-900 shadow-sm">
       <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between py-4 px-4 xl:px-0">
         <div className="flex gap-2 items-center">
-          <img src="/app-icon.png"></img>
           <Link
             href="/"
             className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"

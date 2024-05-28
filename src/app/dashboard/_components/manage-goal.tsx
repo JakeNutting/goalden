@@ -1,5 +1,4 @@
 "use client";
-import { createOrUpdate, deleteGroup } from "@/app/api/groups/actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -77,7 +76,6 @@ export function DeletePopup({ group }: { group: Group }) {
           <Button
             type="button"
             variant="destructive"
-            onClick={() => deleteGroup(group.id)}
           >
             Delete
           </Button>
@@ -105,7 +103,7 @@ export function EditGroup({ group }: { group: Group }) {
             <span className="font-semibold">Add Group</span>
           </div>
         </SheetHeader>
-        <form action={createOrUpdate}>
+        <form>
           <input type="hidden" name="id" value={group.id} />
           <p className="mb-2 mt-3">Group Name:</p>
           <Input type="text" name="groupName" value={nameState} onChange={(e) => setNameState(e.target.value)}></Input>
