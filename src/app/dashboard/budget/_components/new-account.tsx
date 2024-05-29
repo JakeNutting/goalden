@@ -9,8 +9,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { createAccountSchema } from "../../schemas/create-account";
+import { api } from "../../../../../convex/_generated/api";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
-export default function NewAccount() {
 export default function NewAccount({
   orgId,
 }: {
@@ -42,8 +47,8 @@ export default function NewAccount({
 
   return (
     <>
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild className="cursor-pointer hover:text-blue-700" >
+    <Dialog>
+      <DialogTrigger>
           <Button size={"sm"} variant={"outline"} className="">
             Create Account
           </Button>
@@ -93,3 +98,7 @@ export default function NewAccount({
     </>
   );
 }
+  function zodResolver(formSchema: any): import("react-hook-form").Resolver<z.infer<any>, any> | undefined {
+    throw new Error("Function not implemented.");
+  }
+

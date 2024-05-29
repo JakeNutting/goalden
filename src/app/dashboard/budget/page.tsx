@@ -1,12 +1,8 @@
 "use client";
 import { OrganizationSwitcher, useOrganization, useUser } from "@clerk/nextjs";
-"use client"
-import { OrganizationSwitcher, useOrganization } from "@clerk/nextjs";
-import createPrismaClient from "../../../../prisma/prisma";
 import NewAccount from "./_components/new-account";
 import { CircleDollarSign } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Account } from "./models/account";
+import { api } from "../../../../convex/_generated/api";
 
 const Budget = () => {
   const org = useOrganization();
