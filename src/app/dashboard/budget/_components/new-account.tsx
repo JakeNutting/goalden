@@ -11,7 +11,35 @@ import {
 import { useState } from "react";
 
 export default function NewAccount() {
+export default function NewAccount({
+  orgId,
+}: {
+  orgId: string | undefined | null;
+}) {
+  const createAccount = useMutation(api.accounts.createAccount);
   const [open, setOpen] = useState(false);
+
+  const formSchema = createAccountSchema;
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    mode: "onChange",
+    defaultValues: {
+      accountName: "",
+      startingAllowance: 0,
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(orgId);
+    if (!orgId) return;
+    setOpen(false);
+    createAccount({
+      ...values,
+      organizationId: orgId
+    });
+  }
+
   return (
     <>
       <Sheet open={open} onOpenChange={setOpen}>
@@ -19,22 +47,49 @@ export default function NewAccount() {
           <Button size={"sm"} variant={"outline"} className="">
             Create Account
           </Button>
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <div className="flex items-center my-4 gap-3">
-              <span className="font-semibold">Add Group</span>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="mb-8">Add Account</DialogTitle>
+            <div>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-8"
+                >
+                  <FormField
+                    control={form.control}
+                    name="accountName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Account Name</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="startingAllowance"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Starting Allowance</FormLabel>
+                        <FormControl>
+                          <Input {...field} type="number" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit">Submit</Button>
+                </form>
+              </Form>
             </div>
-          </SheetHeader>
-          <form action={createOrUpdate}>
-              <p className="mb-2 mt-3">Group Name:</p>
-              <Input type="text" name="groupName"></Input>
-              <p className="mb-2 mt-6">Group Description:</p>
-              <Input type="text" name="groupType"></Input>
-              <Button className="mt-5" onClick={() => setOpen(false)}>Create</Button>
-            </form>
-        </SheetContent>
-      </Sheet>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
