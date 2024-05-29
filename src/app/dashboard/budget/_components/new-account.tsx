@@ -28,8 +28,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/components/ui/use-toast";
+import { Loader2 } from "lucide-react";
 
 export default function NewAccount({
   orgId,
@@ -41,6 +43,8 @@ export default function NewAccount({
 
   const formSchema = createAccountSchema;
 
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
@@ -48,20 +52,31 @@ export default function NewAccount({
       accountName: "",
       startingAllowance: 0,
       organizationId: orgId ?? "",
-      accountType: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!orgId) return;
 
-    setOpen(false);
-    form.reset();
-
-    await createAccount({
-      ...values,
-      organizationId: orgId,
-    });
+    try {
+      await createAccount({
+        ...values,
+        organizationId: orgId,
+      });
+      setOpen(false);
+      form.reset();
+      toast({
+        title: "Account Created",
+        variant: "success",
+        description: "Your account was created successfully",
+      });
+    } catch (err) {
+      toast({
+        title: "Account Creation Failed",
+        variant: "destructive",
+        description: "There was an error creating your account",
+      });
+    }
   }
 
   return (
@@ -128,12 +143,8 @@ export default function NewAccount({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="Checking">
-                            Checking
-                          </SelectItem>
-                          <SelectItem value="Savings">
-                            Savings
-                          </SelectItem>
+                          <SelectItem value="Checking">Checking</SelectItem>
+                          <SelectItem value="Savings">Savings</SelectItem>
                           <SelectItem value="Credit Card">
                             Credit Card
                           </SelectItem>
@@ -143,7 +154,12 @@ export default function NewAccount({
                     </FormItem>
                   )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={form.formState.isSubmitting} className="flex gap-1">
+                  {form.formState.isSubmitting && (
+                    <Loader2 className="size-4 animate-spin"></Loader2>
+                  )}
+                  Submit
+                </Button>
               </form>
             </Form>
           </DialogHeader>
