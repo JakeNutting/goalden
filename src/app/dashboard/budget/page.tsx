@@ -3,6 +3,7 @@ import { OrganizationSwitcher, useOrganization, useUser } from "@clerk/nextjs";
 import NewAccount from "./_components/new-account";
 import { CircleDollarSign } from "lucide-react";
 import { api } from "../../../../convex/_generated/api";
+import { useQuery } from "convex/react";
 
 const Budget = () => {
   const org = useOrganization();

@@ -9,6 +9,7 @@ import { createAccountSchema } from "../../schemas/create-account";
 import { api } from "../../../../../convex/_generated/api";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function NewAccount({
   orgId,
@@ -92,7 +93,4 @@ export default function NewAccount({
     </>
   );
 }
-  function zodResolver(formSchema: any): import("react-hook-form").Resolver<z.infer<any>, any> | undefined {
-    throw new Error("Function not implemented.");
-  }
 
