@@ -4,10 +4,12 @@ import { v } from "convex/values";
 export default defineSchema({
   accounts: defineTable({
     accountName: v.string(),
-    isActive: v.boolean(),
     organizationId: v.string(),
     startingAllowance: v.float64(),
-  }).index("by_organizationId", ["organizationId"]),
+    accountType: v.string()
+  })
+  .index("by_organizationId", ["organizationId"]),
+
   users: defineTable({
     tokenIdentifier: v.string(),
     name: v.string(),
