@@ -49,6 +49,21 @@ export const createAccount = mutation({
   },
 });
 
+export const deleteAccount = mutation({
+  args: {
+    accountId: v.id("accounts")
+  },
+  async handler(ctx, args) {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new ConvexError("You must be logged in to delete an account");
+    }
+
+    await ctx.db.delete(args.accountId);
+  }
+});
+
 export const getAccounts = query({
   args: {
     organizationId: v.string(),

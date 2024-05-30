@@ -1,11 +1,15 @@
 "use client";
 import { OrganizationSwitcher, useOrganization, useUser } from "@clerk/nextjs";
 import NewAccount from "./_components/new-account";
-import { CircleDollarSign } from "lucide-react";
+import {
+  CircleDollarSign,
+} from "lucide-react";
 import { api } from "../../../../convex/_generated/api";
 import { useQuery } from "convex/react";
 import { cn } from "@/app/lib/utils";
 import Image from "next/image";
+import { useState } from "react";
+import AccountActions from "./_components/account-actions";
 
 const Budget = () => {
   const org = useOrganization();
@@ -20,6 +24,8 @@ const Budget = () => {
     api.accounts.getAccounts,
     orgId && user ? { organizationId: orgId } : "skip"
   );
+
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -71,7 +77,7 @@ const Budget = () => {
                 <h1 className="text-sm text-gray-500">{account.accountName}</h1>
                 <span
                   className={cn(
-                    "text-sm rounded-full px-2 py-1 font-semibold",
+                    "text-xs rounded-full px-2 py-1 font-semibold",
                     {
                       "bg-green-200 text-green-700 ":
                         account.accountType === "Savings",
@@ -85,14 +91,17 @@ const Budget = () => {
                   {account.accountType}
                 </span>
               </div>
-              <h4 className="text-3xl font-semibold mt-2">
-                ${account.startingAllowance.toLocaleString()}
-              </h4>
+              <div className="flex items-baseline justify-between">
+                <h4 className="text-3xl font-semibold mt-2">
+                  ${account.startingAllowance.toLocaleString()}
+                </h4>
+                <AccountActions account={account}></AccountActions>
+              </div>
             </div>
           ))}
         </div>
         {accounts && accounts?.length > 0 && (
-          <div className="flex flex-col gap-8 items-center mt-24">
+          <div className="flex flex-col gap-8 items-center py-24">
             <Image
               alt="an image of a picture and a bank vault"
               width="300"
@@ -100,8 +109,9 @@ const Budget = () => {
               src={"/no-recent-activity.svg"}
             ></Image>
             <div className="flex flex-col gap-4 items-center">
-              <h6 className="text-2xl">
-                There hasn't been any activity on your accounts yet, keep saving!
+              <h6 className="text-2xl text-center">
+                There hasn't been any activity on your accounts yet, keep
+                saving!
               </h6>
             </div>
           </div>
