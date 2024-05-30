@@ -10,6 +10,8 @@ import { cn } from "@/app/lib/utils";
 import Image from "next/image";
 import { useState } from "react";
 import AccountActions from "./_components/account-actions";
+import AccountItem from "./_components/account-transaction";
+import AccountTransaction from "./_components/account-transaction";
 
 const Budget = () => {
   const org = useOrganization();
@@ -113,6 +115,7 @@ const Budget = () => {
                 There hasn't been any activity on your accounts yet, keep
                 saving!
               </h6>
+              <AccountTransaction orgId={orgId ?? ""}></AccountTransaction>
             </div>
           </div>
         )}

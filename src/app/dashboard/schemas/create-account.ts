@@ -6,5 +6,5 @@ export const createAccountSchema = z.object({
       }).max(255),
     organizationId: z.string(),
     accountType: z.enum(["Checking", "Credit Card", "Savings"]),
-    startingAllowance: z.coerce.number().positive({message: "Allowance must be greater than 0"})
+    startingAllowance: z.coerce.number()
 })

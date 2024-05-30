@@ -25,6 +25,7 @@ import { useMutation } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { useToast } from "@/components/ui/use-toast";
 import { Doc } from "../../../../../convex/_generated/dataModel";
+import NewAccount from "./new-account";
 
 export default function AccountActions({account}: {account: Doc<"accounts">}) {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);

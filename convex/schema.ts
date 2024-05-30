@@ -14,5 +14,14 @@ export default defineSchema({
     tokenIdentifier: v.string(),
     name: v.string(),
     orgIds: v.array(v.string())
-  }).index("by_tokenIdentifier", ["tokenIdentifier"])
+  }).index("by_tokenIdentifier", ["tokenIdentifier"]),
+
+  accountItems: defineTable({
+    itemName: v.string(),
+    itemAmmount: v.float64(),
+    itemCategory: v.string(),
+    spendingType: v.string(),
+    isRecurring: v.boolean(),
+    accountId: v.id("accounts")
+  })
 });
