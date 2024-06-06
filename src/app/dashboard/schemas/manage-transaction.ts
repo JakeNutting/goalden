@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+import { zid } from "convex-helpers/server/zod";
 export const manageTransactionSchema = z.object({
   itemName: z
     .string()
@@ -8,6 +8,8 @@ export const manageTransactionSchema = z.object({
     })
     .max(255),
   itemAmmount: z.coerce.number(),
+  organizationId: z.string(),
+  accountId: zid("accounts"),
   itemCategory: z.enum(["Expense", "Withdrawal", "Deposit", "Transfer"]),
   spendingType: z.enum([
     "Utilities",
@@ -18,6 +20,8 @@ export const manageTransactionSchema = z.object({
     "Transportion",
     "Loans",
     "Pleasure",
-  ]),
-  isRecurring: z.boolean()
+    "Salary",
+    "Tithes",
+    "Other"
+  ])
 });

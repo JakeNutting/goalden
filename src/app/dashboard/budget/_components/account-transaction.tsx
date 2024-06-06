@@ -31,15 +31,13 @@ import { manageTransactionSchema } from "../../schemas/manage-transaction";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
+import { cn } from "@/app/lib/utils";
+import { Doc } from "../../../../../convex/_generated/dataModel";
 
-export default function AccountTransaction({ orgId }: { orgId: string }) {
-  const manageItem = useMutation(api.accountItems.deleteItem);
-  const accounts = useQuery(api.accounts.getAccounts, {
-    organizationId: orgId,
-  });
+export default function AccountTransaction({ orgId, accounts }: { orgId: string, accounts: Doc<"accounts">[]}) {
+  const manageTransaction = useMutation(api.transactions.manageTransaction);
+
   const [open, setOpen] = useState(false);
 
   const formSchema = manageTransactionSchema;
@@ -52,25 +50,31 @@ export default function AccountTransaction({ orgId }: { orgId: string }) {
     defaultValues: {
       itemName: "",
       itemAmmount: 0,
+      organizationId: orgId
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      if (accounts == null) return;
+      if (values == null) return;
+
+      await manageTransaction({
+        ...values,
+        organizationId: orgId,
+      });
       
       setOpen(false);
       form.reset();
       toast({
-        title: "Account Created",
+        title: "Transaction Created",
         variant: "success",
-        description: "Your account was created successfully",
+        description: "Your transaction was created successfully",
       });
     } catch (err) {
       toast({
-        title: "Account Creation Failed",
+        title: "Transaction Creation Failed",
         variant: "destructive",
-        description: "There was an error creating your account",
+        description: "There was an error creating your transaction",
       });
     }
   }
@@ -152,9 +156,12 @@ export default function AccountTransaction({ orgId }: { orgId: string }) {
                         <SelectItem value="Dining">Dining</SelectItem>
                         <SelectItem value="Rent">Rent</SelectItem>
                         <SelectItem value="Insurance">Insurance</SelectItem>
-                        <SelectItem value="Transportion">Transportion</SelectItem>
+                        <SelectItem value="Transportation">Transportation</SelectItem>
                         <SelectItem value="Loans">Loans</SelectItem>
                         <SelectItem value="Pleasure">Pleasure</SelectItem>
+                        <SelectItem value="Salary">Salary</SelectItem>
+                        <SelectItem value="Tithes">Tithes</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -174,10 +181,54 @@ export default function AccountTransaction({ orgId }: { orgId: string }) {
                   </FormItem>
                 )}
               />
-              <div className="flex items-center space-x-2">
+              <FormField
+                control={form.control}
+                name="accountId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Account</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select an account for the transaction" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {accounts?.map((account) => (
+                          <SelectItem value={account._id} key={account._id}>
+                            <div className="flex items-center justify-between">
+                              <h1 className="text-sm text-gray-500 mr-2">{account.accountName}</h1>
+                              <span
+                                className={cn(
+                                  "text-xs rounded-full px-2 py-1 font-semibold",
+                                  {
+                                    "bg-green-200 text-green-700 ":
+                                      account.accountType === "Savings",
+                                    "bg-blue-200 text-blue-700 ":
+                                      account.accountType === "Checking",
+                                    "bg-cyan-200 text-cyan-700 ":
+                                      account.accountType === "Credit Card",
+                                  }
+                                )}
+                              >
+                                {account.accountType}
+                              </span>
+                            </div>  
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* <div className="flex items-center space-x-2">
                 <Switch id="airplane-mode" />
                 <Label htmlFor="airplane-mode">Recurring Transaction</Label>
-              </div>
+              </div> */}
               <Button
                 type="submit"
                 disabled={form.formState.isSubmitting}

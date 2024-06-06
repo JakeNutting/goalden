@@ -1,9 +1,7 @@
 "use client";
 import { OrganizationSwitcher, useOrganization, useUser } from "@clerk/nextjs";
 import NewAccount from "./_components/new-account";
-import {
-  CircleDollarSign,
-} from "lucide-react";
+import { CircleDollarSign } from "lucide-react";
 import { api } from "../../../../convex/_generated/api";
 import { useQuery } from "convex/react";
 import { cn } from "@/app/lib/utils";
@@ -12,6 +10,8 @@ import { useState } from "react";
 import AccountActions from "./_components/account-actions";
 import AccountItem from "./_components/account-transaction";
 import AccountTransaction from "./_components/account-transaction";
+import { DataTable } from "./_components/transactions-table";
+import { columns } from "./_components/transaction-columns";
 
 const Budget = () => {
   const org = useOrganization();
@@ -24,6 +24,11 @@ const Budget = () => {
   }
   const accounts = useQuery(
     api.accounts.getAccounts,
+    orgId && user ? { organizationId: orgId } : "skip"
+  );
+
+  const transactions = useQuery(
+    api.transactions.getTransactions,
     orgId && user ? { organizationId: orgId } : "skip"
   );
 
@@ -102,7 +107,8 @@ const Budget = () => {
             </div>
           ))}
         </div>
-        {accounts && accounts?.length > 0 && (
+        {(accounts && accounts?.length > 0 && transactions && transactions?.length == 0) && (
+          // Show default view if no transactions
           <div className="flex flex-col gap-8 items-center py-24">
             <Image
               alt="an image of a picture and a bank vault"
@@ -115,9 +121,52 @@ const Budget = () => {
                 There hasn't been any activity on your accounts yet, keep
                 saving!
               </h6>
-              <AccountTransaction orgId={orgId ?? ""}></AccountTransaction>
+              <AccountTransaction
+                orgId={orgId ?? ""}
+                accounts={accounts}
+              ></AccountTransaction>
             </div>
           </div>
+        )}
+        {accounts && transactions && transactions.length > 0 && (
+          <>
+            <div className="flex justify-between items-center mb-3 mt-16">
+              <h6 className="font-semibold text-xl">Recent Transactions</h6>
+              <AccountTransaction
+                orgId={orgId ?? ""}
+                accounts={accounts}
+              ></AccountTransaction>
+            </div>
+            <div className="mb-10 hidden md:block">
+              <DataTable columns={columns} data={transactions} />
+            </div>
+            <div className="block md:hidden">
+              {transactions?.map((transaction) => (
+                <div
+                  className="border-b border-gray-200 bg-white py-4 px-1"
+                  key={transaction._id}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="test">
+                      <h1 className="font-semibold text-lg">
+                        {transaction.transactionName}
+                      </h1>
+                      <p className="text-gray-500 mt-1">{transaction.category}</p>
+                    </div>
+                    <h1 className=" text-gray-500">
+                      {transaction.category === "Withdrawal" || transaction.category === "Expense" && (
+                          <span className="bg-red-200 text-xs font-semibold text-red-800 rounded-full px-2 py-1.5">-${transaction.ammount.toLocaleString()}</span>
+                      )}
+                      {transaction.category === "Deposit" && (
+                          <span className="bg-green-200 text-xs font-semibold text-green-800 rounded-full px-2 py-1.5">+${transaction.ammount.toLocaleString()}</span>
+                      )}
+                    </h1>
+                  </div>
+                 
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </>

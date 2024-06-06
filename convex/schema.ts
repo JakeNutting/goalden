@@ -3,6 +3,7 @@ import { v } from "convex/values";
 
 export default defineSchema({
   accounts: defineTable({
+    _id: v.string(),
     accountName: v.string(),
     organizationId: v.string(),
     startingAllowance: v.float64(),
@@ -16,12 +17,14 @@ export default defineSchema({
     orgIds: v.array(v.string())
   }).index("by_tokenIdentifier", ["tokenIdentifier"]),
 
-  accountItems: defineTable({
-    itemName: v.string(),
-    itemAmmount: v.float64(),
-    itemCategory: v.string(),
+  transactions: defineTable({
+    transactionName: v.string(),
+    ammount: v.float64(),
+    category: v.string(),
     spendingType: v.string(),
-    isRecurring: v.boolean(),
-    accountId: v.id("accounts")
+    accountId: v.id("accounts"),
+    accountName: v.string(),
+    organizationId: v.string()
   })
+  .index("by_organizationId", ["organizationId"]),
 });
