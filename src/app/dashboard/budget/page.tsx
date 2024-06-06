@@ -155,10 +155,10 @@ const Budget = () => {
                     </div>
                     <h1 className=" text-gray-500">
                       {transaction.category === "Withdrawal" || transaction.category === "Expense" && (
-                          <span className="bg-red-200 text-xs font-semibold text-red-800 rounded-full px-2 py-1.5">-${transaction.ammount.toLocaleString()}</span>
+                          <span className="bg-red-200 text-sm font-semibold text-red-800 rounded-full px-2 py-1.5">-${transaction.ammount.toLocaleString()}</span>
                       )}
                       {transaction.category === "Deposit" && (
-                          <span className="bg-green-200 text-xs font-semibold text-green-800 rounded-full px-2 py-1.5">+${transaction.ammount.toLocaleString()}</span>
+                          <span className="bg-green-200 text-sm font-semibold text-green-800 rounded-full px-2 py-1.5">+${transaction.ammount.toLocaleString()}</span>
                       )}
                     </h1>
                   </div>
