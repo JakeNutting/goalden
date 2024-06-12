@@ -102,7 +102,7 @@ export default function AccountTransaction({ orgId, accounts }: { orgId: string,
                   <FormItem>
                     <FormLabel>Transaction Name</FormLabel>
                     <FormControl>
-                      <Input className="text-[16px] lg:text-sm" {...field}/>
+                      <Input className="text-[16px] lg:text-sm" {...field} placeholder="Enter a transaction name"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -174,7 +174,7 @@ export default function AccountTransaction({ orgId, accounts }: { orgId: string,
                   <FormItem>
                     <FormLabel>Transaction Amount</FormLabel>
                     <FormControl>
-                      <Input className="text-[16px] lg:text-sm"  {...field} type="number" value={field.value ?? ""} />
+                      <Input className="text-[16px] lg:text-sm"  {...field} type="number" value={field.value ?? ""} placeholder="The amount of your transaction" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
