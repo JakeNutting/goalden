@@ -17,7 +17,7 @@ export const manageTransactionSchema = z.object({
     "Dining",
     "Rent",
     "Insurance",
-    "Transportion",
+    "Transportation",
     "Loans",
     "Pleasure",
     "Salary",

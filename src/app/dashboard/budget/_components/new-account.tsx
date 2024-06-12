@@ -50,7 +50,6 @@ export default function NewAccount({
     mode: "onChange",
     defaultValues: {
       accountName: "",
-      startingAllowance: 0,
       organizationId: orgId ?? "",
     },
   });
@@ -108,7 +107,7 @@ export default function NewAccount({
                     <FormItem>
                       <FormLabel>Account Name</FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input className="text-[16px] lg:text-sm" {...field} placeholder="Type a name for your account" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -121,7 +120,7 @@ export default function NewAccount({
                     <FormItem>
                       <FormLabel>Starting Allowance</FormLabel>
                       <FormControl>
-                        <Input {...field} type="number" />
+                        <Input className="text-[16px] lg:text-sm" {...field} type="number" value={field.value ?? ""} placeholder="Enter a dollar amount" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -138,7 +137,7 @@ export default function NewAccount({
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="text-[16px] lg:text-sm">
                             <SelectValue placeholder="Select an account type" />
                           </SelectTrigger>
                         </FormControl>

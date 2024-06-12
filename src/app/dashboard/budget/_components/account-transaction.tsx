@@ -49,7 +49,6 @@ export default function AccountTransaction({ orgId, accounts }: { orgId: string,
     mode: "onChange",
     defaultValues: {
       itemName: "",
-      itemAmmount: 0,
       organizationId: orgId
     },
   });
@@ -103,7 +102,7 @@ export default function AccountTransaction({ orgId, accounts }: { orgId: string,
                   <FormItem>
                     <FormLabel>Transaction Name</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input className="text-[16px] lg:text-sm" {...field}/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -115,13 +114,13 @@ export default function AccountTransaction({ orgId, accounts }: { orgId: string,
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Transaction Type</FormLabel>
-                    <Select
+                    <Select 
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a transaction type" />
+                        <SelectTrigger className="text-[16px] lg:text-sm" >
+                          <SelectValue  placeholder="Select a transaction type" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -146,7 +145,7 @@ export default function AccountTransaction({ orgId, accounts }: { orgId: string,
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger  className="text-[16px] lg:text-sm" >
                           <SelectValue placeholder="Select a spending category" />
                         </SelectTrigger>
                       </FormControl>
@@ -175,7 +174,7 @@ export default function AccountTransaction({ orgId, accounts }: { orgId: string,
                   <FormItem>
                     <FormLabel>Transaction Amount</FormLabel>
                     <FormControl>
-                      <Input {...field} type="number" />
+                      <Input className="text-[16px] lg:text-sm"  {...field} type="number" value={field.value ?? ""} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -192,8 +191,8 @@ export default function AccountTransaction({ orgId, accounts }: { orgId: string,
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select an account for the transaction" />
+                        <SelectTrigger className="text-[16px] lg:text-sm" >
+                          <SelectValue  placeholder="Select an account for the transaction" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
