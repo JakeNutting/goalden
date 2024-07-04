@@ -21,6 +21,14 @@ export const columns: ColumnDef<Doc<"transactions">>[] = [
       header: "Type",
     },
     {
+      accessorKey: "_creationTime",
+      header: "Date",
+      cell: ({ row }) => {
+        const date = row.getValue("_creationTime") as Date;
+        return new Date(date).toLocaleDateString();
+      }
+    },
+    {
         accessorKey: "ammount",
         header: () => <div className="text-right">Amount</div>,
         cell: ({ row }) => {
