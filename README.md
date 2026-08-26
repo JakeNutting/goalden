@@ -1,2 +1,2 @@
-# pcg-connect
-Web application to facilitate activities throughout different regions in the PCG
+# GoalDen
+Web application to facilitate goals and planning
