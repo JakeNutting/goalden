@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PCG Connect",
-  description: "Connectify your world",
+  title: "GoalDen",
+  description: "Transform your daily life together",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

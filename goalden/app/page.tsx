@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -18,7 +19,7 @@ export default function Home() {
           </div>
         </div>
 
-        <img src="/collaboration.svg" alt="PCG Connect" className="size-64" />
+        <Image src="/collaboration.svg" alt="GoalDen collaboration" width={256} height={256} className="size-64" />
       </div>
 
       <div className="grid grid-cols-3 px-24 mt-24 gap-12">
