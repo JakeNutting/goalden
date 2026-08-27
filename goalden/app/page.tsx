@@ -12,7 +12,7 @@ export default function Home() {
           </p>
           <div className="mt-6">
             <Link
-              href={"/events"}
+              href={"/dashboard"}
               className="bg-cyan-500 hover:bg-cyan-600 transition-colors text-white font-bold py-2 px-4 rounded-lg">
               Get Started
             </Link>
