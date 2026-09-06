@@ -20,7 +20,6 @@ export function Navbar() {
                         GoalDen
                     </Link>
                 </div>
-                
                 {/* Mobile UI */}
                 <nav className="fixed inset-x-0 bottom-0 z-9999 w-full border-t-2 border-gray-100 bg-white md:hidden dark:bg-gray-900">
                     <div className="flex items-center divide-x-2 text-xs">
